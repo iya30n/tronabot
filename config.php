@@ -11,6 +11,7 @@ return [
         ]
     ],
     'app' => [
-        'bot_token' => '999857363:AAGF59Prdi7vvMtZW3Kb4pGLG5fjOFFgEj0'
+        'bot_token' => 'bot'.'999857363:AAEetlgDmvn2PVRnjAFKCeLCcAienWxtXxc',
+        'base_url' => 'https://b6c7d4ed9c56.ngrok.io'
     ]
 ];
