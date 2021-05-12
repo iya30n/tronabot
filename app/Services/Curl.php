@@ -91,6 +91,10 @@ class Curl
      */
     public function send()
     {
+        // TODO: refactor setHeaders method to accept additionals (two methods one for set defaults and one for additionals)
+        $this->setHeaders();
+        $this->setOptions();
+
         $ch = curl_init($this->url);
         curl_setopt_array($ch, $this->options);
         $this->result = curl_exec($ch);
@@ -113,7 +117,5 @@ class Curl
         $result = $decode ? json_decode($this->result, true) : $this->result;
 
         return [$status, $result];
-        // dd($status);
-        // return $result;
     }
 }
