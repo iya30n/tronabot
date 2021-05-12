@@ -11,7 +11,8 @@ return [
         ]
     ],
     'app' => [
+        'tel_api_url' => "https://api.telegram.org",
         'bot_token' => 'bot'.'999857363:AAEetlgDmvn2PVRnjAFKCeLCcAienWxtXxc',
-        'base_url' => 'https://b6c7d4ed9c56.ngrok.io'
+        'base_url' => 'https://b0fcf5f4559d.ngrok.io'
     ]
 ];

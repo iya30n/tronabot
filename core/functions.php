@@ -2,10 +2,10 @@
 
 use App\Core\Request;
 
-function dd(...$somthing)
+function dd(...$something)
 {
     echo '<pre>';
-    var_dump($somthing);
+    var_dump($something);
     echo '</pre>';
     die();
 }
@@ -56,6 +56,8 @@ function array_dot($array, $prepend = '')
 
     return $results;
 }
+
+// TODO: remember you've defined array_dot and config functions (add them to the framework)
 
 function config($key)
 {

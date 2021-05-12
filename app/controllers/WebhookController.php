@@ -5,29 +5,58 @@ use App\Services\Curl;
 
 class WebhookController
 {
+    private $telApiUrl;
+    private $botToken;
+    private $appBaseUrl;
+
+    public function __construct()
+    {
+        $this->telApiUrl = config('app.tel_api_url');
+
+        $this->botToken = config('app.bot_token');
+
+        $this->appBaseUrl = config('app.base_url');
+    }
+
+    private function urlGenerator($method)
+    {
+        return $this->telApiUrl . '/' . $this->botToken . '/' . $method;
+    }
+
     public function set()
     {
-        $telBaseUrl = "https://api.telegram.org";
-        $botToken = config('app.bot_token');
+        $url = $this->urlGenerator('setWebhook');
 
-        $baseUrl = config('app.base_url');
-        
-        $request = new Curl("$telBaseUrl/$botToken/setWebhook", "GET", [
-            'url' => "$baseUrl/getUpdate"
+        $updateUrl = $this->appBaseUrl . '/getUpdate';
+
+        $request = new Curl($url, "GET", [
+            'url' => $updateUrl
         ]);
 
-        $response = $request->send()->getResult();
+        $response = $request->send();
 
-        dd($response);
+        dd($response->getResult());
     }
 
     public function info()
     {
-        
+        $url = $this->urlGenerator('getWebhookInfo');
+
+        $request = new Curl($url);
+
+        $response = $request->send();
+
+        dd($response->getResult());
     }
 
     public function delete()
     {
-        
+        $url = $this->urlGenerator('deleteWebhook');
+
+        $request = new Curl($url);
+
+        $response = $request->send();
+
+        dd($response->getResult());
     }
 }
