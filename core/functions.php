@@ -1,4 +1,5 @@
 <?php
+
 use App\Core\Request;
 
 function dd(...$somthing)
@@ -20,14 +21,44 @@ function redirect($path)
     header("location: {$path}");
 }
 
-function validateData($data){
+function validateData($data)
+{
     $data = htmlspecialchars(trim($data));
-    if($data == null){
+    if ($data == null) {
         redirect('/');
     }
-    return $data;    
+    return $data;
 }
 
-function request($key){
+function request($key)
+{
     return Request::get($key);
+}
+
+/**
+ * Flatten a multi-dimensional associative array with dots.
+ *
+ * @param  iterable  $array
+ * @param  string  $prepend
+ * @return array
+ */
+function array_dot($array, $prepend = '')
+{
+    $results = [];
+
+    foreach ($array as $key => $value) {
+        if (is_array($value) && !empty($value)) {
+            $results = array_merge($results, array_dot($value, $prepend . $key . '.'));
+        } else {
+            $results[$prepend . $key] = $value;
+        }
+    }
+
+    return $results;
+}
+
+function config($key)
+{
+    $confFile = include(__DIR__ . '/../config.php');
+    return array_dot($confFile)[$key];
 }
