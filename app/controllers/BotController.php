@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Parsers\Bot\GetUpdateParser;
+use App\Services\Bot\RequestHandler;
 use App\Services\Translators\GoogleTranslator;
 
 class BotController
@@ -17,5 +18,7 @@ class BotController
         $inputText = $input->getUserMessage();
 
         $translated = GoogleTranslator::translate($inputText);
+
+        RequestHandler::replyTo($senderId, $translated);
     }
 }

@@ -62,4 +62,18 @@ class RequestHandler
 
         return $response->getResult();
     }
+
+    public static function replyTo(int $userId, string $text)
+    {
+        $url = static::urlGenerator('sendMessage');
+
+        $request = new Curl($url, "GET", [
+            'chat_id' => $userId,
+            'text' => $text
+        ]);
+
+        $response = $request->send();
+
+        return $response->getResult();
+    }
 }
