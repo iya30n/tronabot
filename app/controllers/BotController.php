@@ -1,31 +1,21 @@
 <?php
 namespace App\Controllers;
 
-use App\Services\Curl;
+use App\Parsers\Bot\GetUpdateParser;
+use App\Services\Translators\GoogleTranslator;
 
 class BotController
 {
     public function getUpdate()
     {
-        $input = file_get_contents('php://input');
-        $input = json_decode($input, true);
+        $input = GetUpdateParser::defineInput(
+            file_get_contents('php://input')
+        );
 
-        $senderId = $input['message']['from']['id'] ?? $input['message']['chat']['id'];
+        $senderId = $input->getSenderId();
 
-        $inputText = $input['message']['text'];
+        $inputText = $input->getUserMessage();
 
-        $translated = $this->translate($inputText);
-        // file_put_contents('telres.json', $translated);
-    }
-
-    private function translate($text)
-    {
-        $translateApi = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=fa&tl=en&dt=t&q=" . urlencode($text);
-
-        $translateResult = (new Curl($translateApi))
-                                              ->send()
-                                              ->getResult();
-
-        return $translateResult[1][0][0][0];
+        $translated = GoogleTranslator::translate($inputText);
     }
 }
