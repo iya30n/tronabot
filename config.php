@@ -13,6 +13,6 @@ return [
     'app' => [
         'tel_api_url' => "https://api.telegram.org",
         'bot_token' => 'bot'.'999857363:AAEetlgDmvn2PVRnjAFKCeLCcAienWxtXxc',
-        'base_url' => 'https://b0fcf5f4559d.ngrok.io'
+        'base_url' => 'https://b3be58bde757.ngrok.io'
     ]
 ];
