@@ -76,4 +76,30 @@ class RequestHandler
 
         return $response->getResult();
     }
+
+    public static function answerQuery(string $queryId, string $text)
+    {
+        $url = static::urlGenerator('answerInlineQuery');
+
+        $qres = [
+            [
+                'type' => 'article',
+                'id' => "00" . rand(1, 9),
+                'title' => $text,
+                'input_message_content' => [
+                    'message_text' => $text,
+                ]
+            ]
+        ];
+
+        $request = new Curl($url, "GET", [
+            'inline_query_id' => (string)$queryId,
+            'results' => json_encode($qres),
+            'cache_time' => 0
+        ]);
+
+        $response = $request->send();
+
+        return $response->getResult();
+    }
 }

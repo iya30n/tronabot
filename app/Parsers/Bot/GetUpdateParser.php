@@ -12,13 +12,37 @@ class GetUpdateParser
         return new static;
     }
 
-    public function getSenderId()
+    public function getMessageType()
     {
-        return static::$input['message']['from']['id'] ?? static::$input['message']['chat']['id']; 
+        if (in_array(static::$input, [null, ""]))
+            return false;
+
+        if (isset(static::$input['message']) == false && isset(static::$input['inline_query']) == false)
+            return false;
+
+        if (array_key_exists('message', static::$input))
+            return 'message';
+        else if (array_key_exists('inline_query', static::$input))
+            return 'inline_query';
     }
 
-    public function getUserMessage()
+    public function getMessage()
     {
         return static::$input['message']['text'];
+    }
+
+    public function getQuery()
+    {
+        return static::$input['inline_query']['query'];
+    }
+
+    public function getSenderId()
+    {
+        return static::$input[$this->getMessageType()]['from']['id'];
+    }
+
+    public function getQueryId()
+    {
+        return static::$input[$this->getMessageType()]['id'];
     }
 }

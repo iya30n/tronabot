@@ -50,10 +50,15 @@ class Curl
      */
     public function makeData($data = [])
     {
+        return http_build_query($data);
+        
+        /* if (is_array($data) && array_key_exists('inline_query_id', $data))
+            return json_encode($data);
+
         if ($this->method == "GET")
             return http_build_query($data);
         else
-            return json_encode($data);
+            return json_encode($data); */
     }
     
 
